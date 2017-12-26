@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Weather Info</string>
+
+    <!-- Splash Screen -->
+    <string name="splash_content_description"> Splash image for national weather services</string>
+
+    <!-- Dashboard-->
+    <string name="search_hint">Enter zip-code to search</string>
+    <string name="favorite_locations">Favorite Cities</string>
+</resources>

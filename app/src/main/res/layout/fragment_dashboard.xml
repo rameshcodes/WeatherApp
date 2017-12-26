@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="android.weather.app.weatherinfo.viewmodel.DashboardViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/medium_margin"
+            android:background="@drawable/search_box_bg"
+            android:drawablePadding="@dimen/medium_margin"
+            android:drawableRight="@android:drawable/ic_menu_search"
+            android:gravity="center_vertical"
+            android:hint="@string/search_hint"
+            android:padding="@dimen/small_margin" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100dp"
+            android:text="@string/favorite_locations" />
+    </RelativeLayout>
+</layout>
