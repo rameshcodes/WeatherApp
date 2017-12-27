@@ -12,7 +12,6 @@ import android.weather.app.weatherinfo.viewmodel.ViewModel;
 @BindingMethods({@BindingMethod(type = View.class,
         attribute = "android:onClick",
         method = "setOnClickListener")})
-
 public final class BindingUtils {
     private static final String TAG = "BindingUtils";
     @Nullable

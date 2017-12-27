@@ -6,9 +6,9 @@ import android.weather.app.weatherinfo.fragment.MVVMFragment;
 
 
 public class BaseActivity extends AppCompatActivity {
-    protected void addFragment(int containerId, MVVMFragment fragment, boolean addToBackStack) {
+    public void replaceFragment(int containerId, MVVMFragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(containerId, fragment);
+        transaction.replace(containerId, fragment);
         if (addToBackStack)
             transaction.addToBackStack(null);
         transaction.commit();

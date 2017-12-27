@@ -16,7 +16,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void loadDashboardFragment() {
-        addFragment(R.id.container_main, new DashboardFragment(), false);
+        replaceFragment(R.id.container_main, new DashboardFragment(), false);
     }
 }
 

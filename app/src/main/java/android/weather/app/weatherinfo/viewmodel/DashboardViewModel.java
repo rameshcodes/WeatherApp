@@ -1,14 +1,13 @@
 package android.weather.app.weatherinfo.viewmodel;
 
 import android.util.Log;
+import android.weather.app.weatherinfo.handler.DashboardHandler;
 import android.weather.app.weatherinfo.model.Point;
 import android.weather.app.weatherinfo.networking.RetrofitClient;
 import android.weather.app.weatherinfo.networking.request.CitiesRequest;
 import android.weather.app.weatherinfo.networking.request.WeatherInfoRequest;
-import android.weather.app.weatherinfo.networking.request.ZipCodeLatLongRequest;
 import android.weather.app.weatherinfo.networking.response.CitiesResponse;
 import android.weather.app.weatherinfo.networking.response.WeatherInfoResponse;
-import android.weather.app.weatherinfo.networking.response.ZipCodeLatLongResponse;
 import android.weather.app.weatherinfo.utils.Constants;
 
 import io.reactivex.Observable;
@@ -19,14 +18,24 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DashboardViewModel implements ViewModel {
     private static final String TAG = "DashboardViewModel";
+    private DashboardHandler mDashboardHandler;
 
-    public DashboardViewModel() {
+    public DashboardViewModel(DashboardHandler dashboardHandler) {
+        mDashboardHandler = dashboardHandler;
 //        loadCitiesData();
 //        getLatLongForZipCode();
         Point location = new Point();
         location.setLatitude("38.99");
         location.setLongitude("-77.01");
         getWeatherInfoForLocation(location);
+    }
+
+    public void favoriteClick() {
+        mDashboardHandler.showFavouritesFragment();
+    }
+
+    public void searchClick() {
+        mDashboardHandler.loadSearchFragment();
     }
 
     private void loadCitiesData() {
@@ -46,22 +55,6 @@ public class DashboardViewModel implements ViewModel {
                 });
     }
 
-    private void getLatLongForZipCode() {
-        ZipCodeLatLongRequest zipcodeLatLongRequest = RetrofitClient.getClient().create(ZipCodeLatLongRequest.class);
-        Observable<ZipCodeLatLongResponse> zipCodeLatLongResponseObservable = zipcodeLatLongRequest.getLatLongForZipcode(20912);
-        zipCodeLatLongResponseObservable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<ZipCodeLatLongResponse>() {
-            @Override
-            public void accept(ZipCodeLatLongResponse zipCodeLatLongResponse) throws Exception {
-                Log.i(TAG, "accept: " + zipCodeLatLongResponse);
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.i(TAG, "error: " + throwable.getMessage());
-            }
-        });
-    }
 
     private void getWeatherInfoForLocation(Point point) {
         final WeatherInfoRequest weatherInfoRequest = RetrofitClient.getClient().create(WeatherInfoRequest.class);
