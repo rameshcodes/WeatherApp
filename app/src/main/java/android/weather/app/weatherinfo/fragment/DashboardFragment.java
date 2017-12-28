@@ -1,9 +1,13 @@
 package android.weather.app.weatherinfo.fragment;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
+import android.transition.Fade;
 import android.weather.app.weatherinfo.R;
-import android.weather.app.weatherinfo.activity.BaseActivity;
+import android.weather.app.weatherinfo.databinding.FragmentDashboardBinding;
 import android.weather.app.weatherinfo.handler.DashboardHandler;
+import android.weather.app.weatherinfo.utils.SearchTransition;
 import android.weather.app.weatherinfo.viewmodel.DashboardViewModel;
 import android.weather.app.weatherinfo.viewmodel.ViewModel;
 
@@ -12,7 +16,18 @@ public class DashboardFragment extends MVVMFragment {
     private DashboardHandler dashboardHandler = new DashboardHandler() {
         @Override
         public void loadSearchFragment() {
-            ((BaseActivity) getActivity()).replaceFragment(R.id.container_main, new SearchFragment(), true);
+//            ActivityUtils.replaceFragment(getActivity(), R.id.container_main, new SearchFragment(), true, getString(R.string.dashboard));
+            SearchFragment searchFragment = new SearchFragment();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                searchFragment.setEnterTransition(new Fade());
+                setExitTransition(new Fade());
+                searchFragment.setSharedElementEnterTransition(new SearchTransition());
+            }
+            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+            fragmentTransaction.addSharedElement(((FragmentDashboardBinding) mBinding).searchView, getString(R.string.search_transition));
+            fragmentTransaction.replace(R.id.container_main, searchFragment).addToBackStack(getString(R.string.dashboard));
+            fragmentTransaction.commit();
         }
 
         @Override

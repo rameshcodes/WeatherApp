@@ -11,6 +11,6 @@ public interface WeatherInfoRequest {
     @GET("ndfdXMLclient.php")
     Observable<WeatherInfoResponse> getWeatherInfo(@Query("lat") String lat, @Query("lon") String lon, @Query("product") String product,
                                                    @Query("begin") String beginTime, @Query("end") String endTime, @Query("maxt") String maxtValue,
-                                                   @Query("mint") String mintValue, @Query("icons") String iconValue);
+                                                   @Query("mint") String mintValue,@Query("temp") String tempValue, @Query("icons") String iconValue);
 
 }

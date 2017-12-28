@@ -3,8 +3,14 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="bgColor">#F9FDFF</color>
 
     <color name="primarySelected">#5d89be</color>
     <color name="homePrimaryDark">#255186</color>
     <color name="disabled_gray">#666666</color>
+
+    <color name="day_temp_color">#FF0000</color>
+    <color name="night_temp_color">#009900</color>
+    <color name="divider">#606060</color>
+    <color name="hour_temp_color">#23169A</color>
 </resources>

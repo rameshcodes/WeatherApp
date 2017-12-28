@@ -5,6 +5,19 @@
     <string name="splash_content_description"> Splash image for national weather services</string>
 
     <!-- Dashboard-->
-    <string name="search_hint">Enter zip-code to search</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="search_hint">Enter zip-code or text to search</string>
     <string name="favorite_locations">Favorite Cities</string>
+
+    <!-- Search screen-->
+    <string name="search_title">Search</string>
+    <string name="search_transition">Search Transition</string>
+    <string name="no_results">No results found</string>
+
+    <!-- Weather info screen -->
+    <string name="min_temp">Min Temp \nNight</string>
+    <string name="max_temp">Max Temp \nDay</string>
+    <string name="min_temp_value">12 F</string>
+    <string name="max_temp_value">26 F</string>
+    <string name="hourly_image_description">Hourly temperature image</string>
 </resources>
