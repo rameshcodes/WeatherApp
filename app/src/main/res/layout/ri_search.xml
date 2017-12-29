@@ -25,6 +25,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:onClick="@{()->rv.mSearchFragmentHandler.onItemClicked(rv.city)}"
                 android:padding="@dimen/large_margin"
                 android:text="@{rv.city.city}"
                 android:textColor="@android:color/black"
@@ -35,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="@dimen/large_margin"
+                android:onClick="@{()->rv.mSearchFragmentHandler.onFavorite(rv.city)}"
                 android:padding="@dimen/medium_margin"
                 android:src="@drawable/favourite_selector" />
         </LinearLayout>

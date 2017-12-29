@@ -1,9 +1,12 @@
 package android.weather.app.weatherinfo.viewmodel;
 
+import android.app.Application;
 import android.arch.lifecycle.MutableLiveData;
 import android.databinding.ObservableBoolean;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.util.Log;
+import android.weather.app.weatherinfo.handler.SearchFragmentHandler;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.networking.RetrofitClient;
 import android.weather.app.weatherinfo.networking.request.CitiesRequest;
@@ -23,7 +26,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class SearchViewModel extends android.arch.lifecycle.ViewModel implements ViewModel {
+public class SearchViewModel extends android.arch.lifecycle.AndroidViewModel implements ViewModel {
     private static final String TAG = "SearchViewModel";
     public ObservableBoolean enableSearchButton = new ObservableBoolean(false);
     public ObservableBoolean noResults = new ObservableBoolean(false);
@@ -32,8 +35,10 @@ public class SearchViewModel extends android.arch.lifecycle.ViewModel implements
     private String searchString;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private MutableLiveData<List<SearchItemViewModel>> searchItemViewModelList;
+    private SearchFragmentHandler mSearchFragmentHandler;
 
-    public SearchViewModel() {
+    public SearchViewModel(@NonNull Application application) {
+        super(application);
     }
 
     public void afterTextChanged(Editable s) {
@@ -81,7 +86,7 @@ public class SearchViewModel extends android.arch.lifecycle.ViewModel implements
                     if (cities[i].toLowerCase().contains(searchString.toLowerCase())) {
                         String[] latLong = latLongList[i].split(",");
                         City city = new City(cities[i], latLong[0], latLong[1]);
-                        SearchItemViewModel searchItemViewModel = new SearchItemViewModel(city);
+                        SearchItemViewModel searchItemViewModel = new SearchItemViewModel(city, mSearchFragmentHandler);
                         searchItemViewModelList.add(searchItemViewModel);
                     }
                 }
@@ -118,5 +123,9 @@ public class SearchViewModel extends android.arch.lifecycle.ViewModel implements
             searchItemViewModelList = new MutableLiveData<>();
         }
         return searchItemViewModelList;
+    }
+
+    public void setSearchFragmentHandler(SearchFragmentHandler mSearchFragmentHandler) {
+        this.mSearchFragmentHandler = mSearchFragmentHandler;
     }
 }
