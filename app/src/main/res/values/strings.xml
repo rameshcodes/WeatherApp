@@ -18,7 +18,6 @@
     <string name="weather_title">Forecast</string>
     <string name="min_temp">Min Temp \nNight</string>
     <string name="max_temp">Max Temp \nDay</string>
-    <string name="min_temp_value">12 F</string>
-    <string name="max_temp_value">26 F</string>
+    <string name="temp_string">%s F</string>
     <string name="hourly_image_description">Hourly temperature image</string>
 </resources>

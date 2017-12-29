@@ -12,5 +12,13 @@ public class Constants {
 
     //Extra data constants
     public static final String EXTRA_CITY = "Extra_City";
+    public static final String EXTRA_FORECAST_DATA = "ForecastData";
+
+    //Parsing constants
+    public static final String DAILY_MAX_TYPE = "maximum";
+    public static final String DAILY_MIN_TYPE = "minimum";
+    public static final String DAILY_HOURLY_TYPE = "hourly";
+    public static final String ICONS = "forecast-NWS";
+
 
 }

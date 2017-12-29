@@ -11,20 +11,29 @@
     <LinearLayout
         android:layout_width="@dimen/day_tab_width"
         android:layout_height="@dimen/day_tab_height"
+        android:background="@{rv.isSelected ? @color/colorAccent : @color/white}"
         android:clickable="true"
-        android:gravity="center"
+        android:focusable="true"
         android:onClick="@{()->rv.showDayWeather()}"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="@{rv.day}"
             android:textAlignment="center"
-            android:textColor="@{rv.isSelected ? @color/white : @color/colorPrimary}"
+            android:textColor="@{rv.isSelected ? @color/black : @color/colorPrimary}"
             android:textSize="@dimen/medium_font_size"
             android:textStyle="bold" />
 
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/disabled_gray" />
     </LinearLayout>
 
 </layout>

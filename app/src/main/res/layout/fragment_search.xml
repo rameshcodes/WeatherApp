@@ -36,7 +36,9 @@
                 android:gravity="center_vertical"
                 android:hint="@string/search_hint"
                 android:maxLines="1"
-                android:padding="@dimen/small_margin" />
+                android:padding="@dimen/small_margin">
+                <requestFocus />
+            </EditText>
 
             <ImageButton
                 android:layout_width="wrap_content"

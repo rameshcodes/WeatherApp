@@ -16,11 +16,12 @@
 
         <android.weather.app.weatherinfo.view.DayRecyclerView
             android:id="@+id/day_recycler_view"
+            android:background="@color/disabled_gray"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/day_tide_view_pager"
+            android:id="@+id/day_forecast_view_pager"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
