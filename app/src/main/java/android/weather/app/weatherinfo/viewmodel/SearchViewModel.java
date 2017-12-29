@@ -28,9 +28,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SearchViewModel extends android.arch.lifecycle.AndroidViewModel implements ViewModel {
     private static final String TAG = "SearchViewModel";
-    public ObservableBoolean enableSearchButton = new ObservableBoolean(false);
-    public ObservableBoolean noResults = new ObservableBoolean(false);
-    public ObservableBoolean showLoading = new ObservableBoolean(false);
+    public final ObservableBoolean enableSearchButton = new ObservableBoolean(false);
+    public final ObservableBoolean noResults = new ObservableBoolean(false);
+    public final ObservableBoolean showLoading = new ObservableBoolean(false);
 
     private String searchString;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();

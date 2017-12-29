@@ -1,7 +1,10 @@
 package android.weather.app.weatherinfo.model;
 
 
-public class HourWeatherInfo {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class HourWeatherInfo implements Parcelable {
     private final String imageUrl;
     private final String time;
     private final String temp;
@@ -23,4 +26,34 @@ public class HourWeatherInfo {
     public String getTemp() {
         return temp;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.imageUrl);
+        dest.writeString(this.time);
+        dest.writeString(this.temp);
+    }
+
+    protected HourWeatherInfo(Parcel in) {
+        this.imageUrl = in.readString();
+        this.time = in.readString();
+        this.temp = in.readString();
+    }
+
+    public static final Parcelable.Creator<HourWeatherInfo> CREATOR = new Parcelable.Creator<HourWeatherInfo>() {
+        @Override
+        public HourWeatherInfo createFromParcel(Parcel source) {
+            return new HourWeatherInfo(source);
+        }
+
+        @Override
+        public HourWeatherInfo[] newArray(int size) {
+            return new HourWeatherInfo[size];
+        }
+    };
 }

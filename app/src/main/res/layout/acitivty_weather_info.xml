@@ -3,27 +3,36 @@
 
     <data>
 
+        <import type="android.view.View"/>
         <variable
             name="vm"
             type="android.weather.app.weatherinfo.viewmodel.WeatherInfoActivityViewModel" />
-
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <android.weather.app.weatherinfo.view.DayRecyclerView
             android:id="@+id/day_recycler_view"
-            android:background="@color/disabled_gray"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:padding="1dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/day_tab_list_bg" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/day_forecast_view_pager"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/day_recycler_view" />
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="@{vm.showLoading?View.VISIBLE:View.GONE}" />
+
+    </RelativeLayout>
 </layout>

@@ -2,6 +2,7 @@ package android.weather.app.weatherinfo.adapter;
 
 
 import android.weather.app.weatherinfo.R;
+import android.weather.app.weatherinfo.handler.DayListHandler;
 import android.weather.app.weatherinfo.viewmodel.DayTabViewModel;
 
 import java.util.ArrayList;
@@ -11,21 +12,22 @@ import java.util.Set;
 public class DayListForecastAdapter extends BaseAdapter {
     private List<DayTabViewModel> dayTabViewModelList;
 
-    public DayListForecastAdapter(Set<String> daysSet) {
+    public DayListForecastAdapter(Set<String> daysSet, DayListHandler dayListHandler) {
         this.dayTabViewModelList = new ArrayList<>();
-        convertIntoViewModel(daysSet);
+        convertIntoViewModel(daysSet, dayListHandler);
     }
 
-    private void convertIntoViewModel(Set<String> daysSet) {
+    private void convertIntoViewModel(Set<String> daysSet, DayListHandler dayListHandler) {
+        int index = 0;
         for (String day : daysSet) {
-            dayTabViewModelList.add(new DayTabViewModel(day));
+            dayTabViewModelList.add(new DayTabViewModel(day, index++, dayListHandler));
         }
     }
-    
+
     @Override
     protected Object getObjForPosition(int position) {
         if (dayTabViewModelList != null) {
-            dayTabViewModelList.get(position);
+            return dayTabViewModelList.get(position);
         }
         return null;
     }
@@ -41,5 +43,11 @@ public class DayListForecastAdapter extends BaseAdapter {
             return dayTabViewModelList.size();
         }
         return 0;
+    }
+
+    public void setSelectedItem(int position) {
+        for (int i = 0; i < dayTabViewModelList.size(); i++) {
+            dayTabViewModelList.get(i).setSelected(i == position);
+        }
     }
 }

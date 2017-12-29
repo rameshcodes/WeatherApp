@@ -23,7 +23,6 @@ import java.util.List;
 public class SearchFragment extends MVVMFragment {
     private SearchViewModel mSearchViewModel;
     private SearchAdapter mSearchAdapter;
-
     private SearchFragmentHandler searchFragmentHandler = new SearchFragmentHandler() {
         @Override
         public void onItemClicked(City city) {

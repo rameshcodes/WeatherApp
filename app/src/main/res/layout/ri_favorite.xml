@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="rv"
+            type="android.weather.app.weatherinfo.viewmodel.FavoriteItemViewModel" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/medium_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:onClick="@{()->rv.favoriteHandler.onFavoriteSelected(rv.city)}"
+            android:padding="@dimen/large_margin"
+            android:text="@{rv.city.city}"
+            android:textColor="@android:color/black"
+            android:textSize="16dp" />
+
+    </android.support.v7.widget.CardView>
+</layout>

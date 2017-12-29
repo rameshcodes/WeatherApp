@@ -42,7 +42,7 @@ public class DayRecyclerView extends RecyclerView {
             @Override
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_SETTLING) {
-                    dayListHandler.onMonthPagerSwiped(tidesPager.getCurrentItem());
+                    dayListHandler.onDayPagerSwiped(tidesPager.getCurrentItem());
                 }
             }
         });

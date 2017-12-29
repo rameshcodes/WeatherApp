@@ -20,4 +20,7 @@
     <string name="max_temp">Max Temp \nDay</string>
     <string name="temp_string">%s F</string>
     <string name="hourly_image_description">Hourly temperature image</string>
+
+    <!--Favorites-->
+    <string name="fav_title">Favorites</string>
 </resources>

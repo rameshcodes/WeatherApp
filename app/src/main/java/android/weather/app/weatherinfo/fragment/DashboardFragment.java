@@ -7,6 +7,7 @@ import android.transition.Fade;
 import android.weather.app.weatherinfo.R;
 import android.weather.app.weatherinfo.databinding.FragmentDashboardBinding;
 import android.weather.app.weatherinfo.handler.DashboardHandler;
+import android.weather.app.weatherinfo.utils.ActivityUtils;
 import android.weather.app.weatherinfo.utils.SearchTransition;
 import android.weather.app.weatherinfo.viewmodel.DashboardViewModel;
 import android.weather.app.weatherinfo.viewmodel.ViewModel;
@@ -16,7 +17,6 @@ public class DashboardFragment extends MVVMFragment {
     private DashboardHandler dashboardHandler = new DashboardHandler() {
         @Override
         public void loadSearchFragment() {
-//            ActivityUtils.replaceFragment(getActivity(), R.id.container_main, new SearchFragment(), true, getString(R.string.dashboard));
             SearchFragment searchFragment = new SearchFragment();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 searchFragment.setEnterTransition(new Fade());
@@ -32,6 +32,7 @@ public class DashboardFragment extends MVVMFragment {
 
         @Override
         public void showFavouritesFragment() {
+            ActivityUtils.replaceFragment(getActivity(), R.id.container_main, new FavoritesFragment(), true, getString(R.string.dashboard));
         }
     };
 

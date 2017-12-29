@@ -72,4 +72,18 @@ public class Util {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM dd", Locale.US);
         return simpleDateFormat.format(date);
     }
+
+    public static String getTime(String dateTime) {
+        Date date = null;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
+            simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+            date = simpleDateFormat.parse(dateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a", Locale.US);
+        return simpleDateFormat.format(date);
+    }
 }

@@ -2,6 +2,7 @@ package android.weather.app.weatherinfo.viewmodel;
 
 
 import android.arch.lifecycle.MutableLiveData;
+import android.databinding.ObservableBoolean;
 import android.util.Log;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.model.DayWeatherInfo;
@@ -23,12 +24,14 @@ import io.reactivex.schedulers.Schedulers;
 public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewModel implements ViewModel {
     private static final String TAG = "WeatherInfoActivityView";
     private MutableLiveData<Map<String, DayWeatherInfo>> daysForecastMap;
+    public final ObservableBoolean showLoading = new ObservableBoolean(false);
 
     public WeatherInfoActivityViewModel(City city) {
         getWeatherInfoForLocation(city.getLatitude(), city.getLongitude());
     }
 
     private void getWeatherInfoForLocation(String lat, String lon) {
+        showLoading.set(true);
         final WeatherInfoRequest weatherInfoRequest = RetrofitClient.getClient().create(WeatherInfoRequest.class);
         Observable<WeatherInfoResponse> weatherInfoResponseObservable = weatherInfoRequest.getWeatherInfo(lat, lon, Constants.PRODUCT_VALUE,
                 Constants.BEGIN_TIME, Constants.END_TIME, Constants.MAXT_VALUE, Constants.MINT_VALUE, Constants.TEMP_VALUE, Constants.ICONS_VALUE);
@@ -46,11 +49,13 @@ public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewMod
                 if (!dayWeatherInfoMap.isEmpty()) {
                     daysForecastMap.postValue(dayWeatherInfoMap);
                 }
+                showLoading.set(false);
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
                 Log.e(TAG, "Error: " + throwable.getMessage());
+                showLoading.set(false);
             }
         });
     }

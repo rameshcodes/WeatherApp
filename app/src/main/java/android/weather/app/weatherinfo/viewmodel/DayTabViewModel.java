@@ -2,18 +2,23 @@ package android.weather.app.weatherinfo.viewmodel;
 
 
 import android.databinding.ObservableBoolean;
-import android.databinding.ObservableField;
+import android.weather.app.weatherinfo.handler.DayListHandler;
 
 public class DayTabViewModel implements ViewModel {
-    public ObservableBoolean isSelected = new ObservableBoolean(false);
-    public ObservableField<String> day = new ObservableField<String>("MAR 31");
+    public final ObservableBoolean isSelected = new ObservableBoolean(false);
+    public final String day;
+    public final DayListHandler dayListHandler;
+    private final int position;
 
-    public DayTabViewModel(String day) {
-        this.day.set(day);
+
+    public DayTabViewModel(String day, int position, DayListHandler dayListHandler) {
+        this.day = day;
+        this.position = position;
+        this.dayListHandler = dayListHandler;
     }
 
     public void showDayWeather() {
-
+        dayListHandler.onDaySelected(position);
     }
 
     public void setSelected(boolean isSelected) {

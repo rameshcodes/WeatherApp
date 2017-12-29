@@ -2,27 +2,32 @@ package android.weather.app.weatherinfo.adapter;
 
 
 import android.weather.app.weatherinfo.R;
+import android.weather.app.weatherinfo.model.HourWeatherInfo;
 import android.weather.app.weatherinfo.viewmodel.HourlyTempViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HourlyTempAdapter extends BaseAdapter {
 
     private List<HourlyTempViewModel> hourlyTempViewModelList;
 
-    public HourlyTempAdapter(List<HourlyTempViewModel> hourlyTempViewModelList) {
-        this.hourlyTempViewModelList = hourlyTempViewModelList;
+    public HourlyTempAdapter(List<HourWeatherInfo> hourWeatherInfoList) {
+        this.hourlyTempViewModelList = new ArrayList<>();
+        convertIntoViewModels(hourWeatherInfoList);
     }
 
-    public void setHourlyTempViewModelList(List<HourlyTempViewModel> hourlyTempViewModelList) {
-        this.hourlyTempViewModelList = hourlyTempViewModelList;
-        notifyDataSetChanged();
+    private void convertIntoViewModels(List<HourWeatherInfo> hourWeatherInfoList) {
+        for (HourWeatherInfo info : hourWeatherInfoList) {
+            this.hourlyTempViewModelList.add(new HourlyTempViewModel(info));
+        }
+
     }
 
     @Override
     protected Object getObjForPosition(int position) {
         if (hourlyTempViewModelList != null)
-            hourlyTempViewModelList.get(position);
+            return hourlyTempViewModelList.get(position);
         return null;
     }
 
