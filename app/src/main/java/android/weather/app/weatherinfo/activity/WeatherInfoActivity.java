@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.weather.app.weatherinfo.R;
 import android.weather.app.weatherinfo.adapter.DayListForecastAdapter;
@@ -24,9 +25,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class WeatherInfoActivity extends MVVMActivity implements DayListHandler {
+    private static final String SELECTED_DAY = "SelectedMonth";
+
     private WeatherInfoActivityViewModel mWeatherInfoActivityViewModel;
     private DayListForecastAdapter dayListForecastAdapter;
     private ForecastPagerAdapter forecastPagerAdapter;
+    private ViewPager dayForecastViewPager;
+    private int selectedPosition = 0;
 
     @NonNull
     @Override
@@ -47,6 +52,9 @@ public class WeatherInfoActivity extends MVVMActivity implements DayListHandler 
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.weather_title));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_DAY)) {
+            selectedPosition = savedInstanceState.getInt(SELECTED_DAY);
+        }
         subscribeToForecastData();
     }
 
@@ -61,14 +69,21 @@ public class WeatherInfoActivity extends MVVMActivity implements DayListHandler 
 
     private void setUpViews(Map<String, DayWeatherInfo> dayWeatherInfoMap) {
         DayRecyclerView dayRecyclerView = ((AcitivtyWeatherInfoBinding) mBinding).dayRecyclerView;
-        dayListForecastAdapter = new DayListForecastAdapter(dayWeatherInfoMap.keySet(),this);
+        dayForecastViewPager = ((AcitivtyWeatherInfoBinding) mBinding).dayForecastViewPager;
+        dayListForecastAdapter = new DayListForecastAdapter(dayWeatherInfoMap.keySet(), this);
         forecastPagerAdapter = new ForecastPagerAdapter(getSupportFragmentManager(), new ArrayList<DayWeatherInfo>(dayWeatherInfoMap.values()));
         dayRecyclerView.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         dayRecyclerView.setAdapter(dayListForecastAdapter);
-        ((AcitivtyWeatherInfoBinding) mBinding).dayForecastViewPager.setAdapter(forecastPagerAdapter);
+        dayForecastViewPager.setAdapter(forecastPagerAdapter);
         dayRecyclerView.setUpWithViewPager(((AcitivtyWeatherInfoBinding) mBinding).dayForecastViewPager, this);
-        onDaySelected(0);
+        onDaySelected(selectedPosition);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SELECTED_DAY, dayForecastViewPager.getCurrentItem());
     }
 
 
@@ -76,12 +91,12 @@ public class WeatherInfoActivity extends MVVMActivity implements DayListHandler 
     public void onDaySelected(int position) {
         ((AcitivtyWeatherInfoBinding) mBinding).dayForecastViewPager.setCurrentItem(position, true);
         dayListForecastAdapter.setSelectedItem(position);
-        ((AcitivtyWeatherInfoBinding) mBinding).dayRecyclerView.scrollToPosition(position);
+        ((AcitivtyWeatherInfoBinding) mBinding).dayRecyclerView.smoothScrollToPosition(position);
     }
 
     @Override
     public void onDayPagerSwiped(int position) {
         dayListForecastAdapter.setSelectedItem(position);
-        ((AcitivtyWeatherInfoBinding) mBinding).dayRecyclerView.scrollToPosition(position);
+        ((AcitivtyWeatherInfoBinding) mBinding).dayRecyclerView.smoothScrollToPosition(position);
     }
 }

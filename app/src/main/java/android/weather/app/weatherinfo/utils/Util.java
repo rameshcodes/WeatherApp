@@ -6,8 +6,13 @@ import android.weather.app.weatherinfo.model.HourWeatherInfo;
 import android.weather.app.weatherinfo.model.Temperature;
 import android.weather.app.weatherinfo.model.TimeLayout;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -21,6 +26,12 @@ public class Util {
         if (value == null) {
             throw new NullPointerException(name + " should not be null");
         }
+    }
+
+    public static <T> List<T> jsonElementToList(JsonElement element, Class<T[]> clazz) {
+        if (element instanceof JsonNull)
+            return null;
+        return Arrays.asList(new Gson().fromJson(element, clazz));
     }
 
     public static Map<String, DayWeatherInfo> convertToWeatherForecastData(Data data) {

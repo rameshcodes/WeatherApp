@@ -7,12 +7,14 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.util.Log;
 import android.weather.app.weatherinfo.handler.SearchFragmentHandler;
+import android.weather.app.weatherinfo.handler.SearchItemHandler;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.networking.RetrofitClient;
 import android.weather.app.weatherinfo.networking.request.CitiesRequest;
 import android.weather.app.weatherinfo.networking.request.ZipCodeLatLongRequest;
 import android.weather.app.weatherinfo.networking.response.CitiesResponse;
 import android.weather.app.weatherinfo.networking.response.ZipCodeLatLongResponse;
+import android.weather.app.weatherinfo.persistance.DatabaseManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-public class SearchViewModel extends android.arch.lifecycle.AndroidViewModel implements ViewModel {
+public class SearchViewModel extends android.arch.lifecycle.AndroidViewModel implements ViewModel, SearchItemHandler {
     private static final String TAG = "SearchViewModel";
     public final ObservableBoolean enableSearchButton = new ObservableBoolean(false);
     public final ObservableBoolean noResults = new ObservableBoolean(false);
@@ -53,6 +55,36 @@ public class SearchViewModel extends android.arch.lifecycle.AndroidViewModel imp
             loadCitiesData(searchString);
         }
     }
+
+    public MutableLiveData<List<SearchItemViewModel>> getSearchItemViewModelList() {
+        if (searchItemViewModelList == null) {
+            searchItemViewModelList = new MutableLiveData<>();
+        }
+        return searchItemViewModelList;
+    }
+
+    public void setSearchFragmentHandler(SearchFragmentHandler mSearchFragmentHandler) {
+        this.mSearchFragmentHandler = mSearchFragmentHandler;
+    }
+
+    @Override
+    public void onItemClicked(City city) {
+        if (mSearchFragmentHandler != null) {
+            mSearchFragmentHandler.showForecast(city);
+        }
+    }
+
+    @Override
+    public void onFavorite(City city) {
+        DatabaseManager.getInstance().insertCity(city);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        compositeDisposable.dispose();
+    }
+
 
     private void getLatLongForZipCode(int zipCode) {
         ZipCodeLatLongRequest zipcodeLatLongRequest = RetrofitClient.getClient().create(ZipCodeLatLongRequest.class);
@@ -86,7 +118,7 @@ public class SearchViewModel extends android.arch.lifecycle.AndroidViewModel imp
                     if (cities[i].toLowerCase().contains(searchString.toLowerCase())) {
                         String[] latLong = latLongList[i].split(",");
                         City city = new City(cities[i], latLong[0], latLong[1]);
-                        SearchItemViewModel searchItemViewModel = new SearchItemViewModel(city, mSearchFragmentHandler);
+                        SearchItemViewModel searchItemViewModel = new SearchItemViewModel(city, SearchViewModel.this);
                         searchItemViewModelList.add(searchItemViewModel);
                     }
                 }
@@ -112,20 +144,5 @@ public class SearchViewModel extends android.arch.lifecycle.AndroidViewModel imp
         compositeDisposable.add(d);
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        compositeDisposable.dispose();
-    }
 
-    public MutableLiveData<List<SearchItemViewModel>> getSearchItemViewModelList() {
-        if (searchItemViewModelList == null) {
-            searchItemViewModelList = new MutableLiveData<>();
-        }
-        return searchItemViewModelList;
-    }
-
-    public void setSearchFragmentHandler(SearchFragmentHandler mSearchFragmentHandler) {
-        this.mSearchFragmentHandler = mSearchFragmentHandler;
-    }
 }

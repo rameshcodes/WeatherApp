@@ -2,16 +2,19 @@ package android.weather.app.weatherinfo.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.weather.app.weatherinfo.R;
 import android.weather.app.weatherinfo.activity.WeatherInfoActivity;
 import android.weather.app.weatherinfo.adapter.SearchAdapter;
 import android.weather.app.weatherinfo.databinding.FragmentSearchBinding;
 import android.weather.app.weatherinfo.handler.SearchFragmentHandler;
+import android.weather.app.weatherinfo.handler.SearchItemHandler;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.utils.Constants;
 import android.weather.app.weatherinfo.viewmodel.SearchItemViewModel;
@@ -21,12 +24,24 @@ import android.weather.app.weatherinfo.viewmodel.ViewModel;
 import java.util.List;
 
 public class SearchFragment extends MVVMFragment {
+    private static final String TAG = "SearchFragment";
     private SearchViewModel mSearchViewModel;
     private SearchAdapter mSearchAdapter;
+    private Context mContext;
     private SearchFragmentHandler searchFragmentHandler = new SearchFragmentHandler() {
         @Override
+        public void showForecast(City city) {
+            Log.i(TAG, "onItemClicked: " + mContext);
+            Intent intent = new Intent(mContext, WeatherInfoActivity.class);
+            intent.putExtra(Constants.EXTRA_CITY, city);
+            startActivity(intent);
+        }
+    };
+    private SearchItemHandler searchItemHandler = new SearchItemHandler() {
+        @Override
         public void onItemClicked(City city) {
-            Intent intent = new Intent(getActivity(), WeatherInfoActivity.class);
+            Log.i(TAG, "onItemClicked: " + mContext);
+            Intent intent = new Intent(mContext, WeatherInfoActivity.class);
             intent.putExtra(Constants.EXTRA_CITY, city);
             startActivity(intent);
         }
@@ -43,6 +58,12 @@ public class SearchFragment extends MVVMFragment {
         mSearchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         mSearchViewModel.setSearchFragmentHandler(searchFragmentHandler);
         return mSearchViewModel;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mContext = context;
     }
 
     @NonNull
@@ -67,6 +88,12 @@ public class SearchFragment extends MVVMFragment {
     public void onDestroyView() {
         mSearchViewModel.setSearchFragmentHandler(null);
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null;
     }
 
     private void initViews() {

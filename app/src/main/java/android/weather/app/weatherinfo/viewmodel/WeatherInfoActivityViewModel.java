@@ -9,9 +9,11 @@ import android.weather.app.weatherinfo.model.DayWeatherInfo;
 import android.weather.app.weatherinfo.networking.RetrofitClient;
 import android.weather.app.weatherinfo.networking.request.WeatherInfoRequest;
 import android.weather.app.weatherinfo.networking.response.WeatherInfoResponse;
+import android.weather.app.weatherinfo.persistance.DatabaseManager;
 import android.weather.app.weatherinfo.utils.Constants;
 import android.weather.app.weatherinfo.utils.Util;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -24,22 +26,26 @@ import io.reactivex.schedulers.Schedulers;
 public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewModel implements ViewModel {
     private static final String TAG = "WeatherInfoActivityView";
     private MutableLiveData<Map<String, DayWeatherInfo>> daysForecastMap;
+    private City city;
     public final ObservableBoolean showLoading = new ObservableBoolean(false);
 
     public WeatherInfoActivityViewModel(City city) {
-        getWeatherInfoForLocation(city.getLatitude(), city.getLongitude());
+        this.city = city;
+        getWeatherInfoForLocation();
     }
 
-    private void getWeatherInfoForLocation(String lat, String lon) {
+    private void getWeatherInfoForLocation() {
         showLoading.set(true);
         final WeatherInfoRequest weatherInfoRequest = RetrofitClient.getClient().create(WeatherInfoRequest.class);
-        Observable<WeatherInfoResponse> weatherInfoResponseObservable = weatherInfoRequest.getWeatherInfo(lat, lon, Constants.PRODUCT_VALUE,
+        Observable<WeatherInfoResponse> weatherInfoResponseObservable = weatherInfoRequest.getWeatherInfo(city.getLatitude(), city.getLongitude(), Constants.PRODUCT_VALUE,
                 Constants.BEGIN_TIME, Constants.END_TIME, Constants.MAXT_VALUE, Constants.MINT_VALUE, Constants.TEMP_VALUE, Constants.ICONS_VALUE);
         weatherInfoResponseObservable.flatMap(new Function<WeatherInfoResponse, ObservableSource<Map<String, DayWeatherInfo>>>() {
             @Override
             public ObservableSource<Map<String, DayWeatherInfo>> apply(WeatherInfoResponse weatherInfoResponse) throws Exception {
                 Log.i(TAG, "accept: " + weatherInfoResponse);
-                return Observable.just(Util.convertToWeatherForecastData(weatherInfoResponse.getData()));
+                Map<String, DayWeatherInfo> dayWeatherInfoMap = Util.convertToWeatherForecastData(weatherInfoResponse.getData());
+                DatabaseManager.getInstance().insertWeatherData(city, new ArrayList<DayWeatherInfo>(dayWeatherInfoMap.values()));
+                return Observable.just(dayWeatherInfoMap);
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Map<String, DayWeatherInfo>>() {

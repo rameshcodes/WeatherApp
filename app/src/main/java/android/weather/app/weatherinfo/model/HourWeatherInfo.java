@@ -27,6 +27,7 @@ public class HourWeatherInfo implements Parcelable {
         return temp;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -45,7 +46,7 @@ public class HourWeatherInfo implements Parcelable {
         this.temp = in.readString();
     }
 
-    public static final Parcelable.Creator<HourWeatherInfo> CREATOR = new Parcelable.Creator<HourWeatherInfo>() {
+    public static final Creator<HourWeatherInfo> CREATOR = new Creator<HourWeatherInfo>() {
         @Override
         public HourWeatherInfo createFromParcel(Parcel source) {
             return new HourWeatherInfo(source);

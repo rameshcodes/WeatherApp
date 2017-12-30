@@ -24,7 +24,6 @@ public class DashboardFragment extends MVVMFragment {
                 searchFragment.setSharedElementEnterTransition(new SearchTransition());
             }
             FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-
             fragmentTransaction.addSharedElement(((FragmentDashboardBinding) mBinding).searchView, getString(R.string.search_transition));
             fragmentTransaction.replace(R.id.container_main, searchFragment).addToBackStack(getString(R.string.dashboard));
             fragmentTransaction.commit();

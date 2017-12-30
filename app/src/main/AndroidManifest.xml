@@ -23,6 +23,14 @@
         </activity>
         <activity android:name=".activity.MainActivity"></activity>
         <activity android:name=".activity.WeatherInfoActivity" />
+
+        <service
+            android:name=".scheduler.UpdateWeatherJobService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

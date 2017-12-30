@@ -1,10 +1,16 @@
 package android.weather.app.weatherinfo.model;
 
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
+@Entity
 public class City implements Parcelable {
+    @PrimaryKey
+    @NonNull
     private String city;
     private String latitude;
     private String longitude;
