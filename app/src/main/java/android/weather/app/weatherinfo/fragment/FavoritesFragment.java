@@ -13,12 +13,10 @@ import android.weather.app.weatherinfo.activity.WeatherInfoActivity;
 import android.weather.app.weatherinfo.adapter.FavoriteAdapter;
 import android.weather.app.weatherinfo.databinding.FragmentFavoritesBinding;
 import android.weather.app.weatherinfo.handler.FavoriteHandler;
-import android.weather.app.weatherinfo.handler.FavoriteItemHandler;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.utils.Constants;
 import android.weather.app.weatherinfo.viewmodel.FavoriteItemViewModel;
 import android.weather.app.weatherinfo.viewmodel.FavoriteViewModel;
-import android.weather.app.weatherinfo.viewmodel.SearchViewModel;
 import android.weather.app.weatherinfo.viewmodel.ViewModel;
 
 import java.util.List;
@@ -32,6 +30,7 @@ public class FavoritesFragment extends MVVMFragment {
         public void favoriteClick(City city) {
             Intent intent = new Intent(getContext(), WeatherInfoActivity.class);
             intent.putExtra(Constants.EXTRA_CITY, city);
+            intent.putExtra(Constants.EXTRA_IS_FROM_FAVORITES_SCREEN,true);
             startActivity(intent);
         }
     };

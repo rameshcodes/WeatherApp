@@ -13,6 +13,7 @@ public class Constants {
     //Extra data constants
     public static final String EXTRA_CITY = "Extra_City";
     public static final String EXTRA_FORECAST_DATA = "ForecastData";
+    public static final String EXTRA_IS_FROM_FAVORITES_SCREEN ="IsFromFavoritesScreen";
 
     //Parsing constants
     public static final String DAILY_MAX_TYPE = "maximum";

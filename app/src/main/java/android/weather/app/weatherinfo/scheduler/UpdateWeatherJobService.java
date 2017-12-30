@@ -56,7 +56,7 @@ public class UpdateWeatherJobService extends JobService {
                         latLongBuilder.append(" ");
                     }
                 }
-                return latLongBuilder.toString();
+                return Observable.just(latLongBuilder.toString());
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer() {

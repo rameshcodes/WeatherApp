@@ -8,14 +8,16 @@ import android.weather.app.weatherinfo.viewmodel.WeatherInfoActivityViewModel;
 
 public class WeatherInfoViewModelFactory implements ViewModelProvider.Factory {
     private final City city;
+    private final boolean isFromFavoriteScreen;
 
-    public WeatherInfoViewModelFactory(City city) {
+    public WeatherInfoViewModelFactory(City city, boolean isFromFavoriteScreen) {
         this.city = city;
+        this.isFromFavoriteScreen = isFromFavoriteScreen;
     }
 
     @NonNull
     @Override
     public WeatherInfoActivityViewModel create(@NonNull Class modelClass) {
-        return new WeatherInfoActivityViewModel(city);
+        return new WeatherInfoActivityViewModel(city, isFromFavoriteScreen);
     }
 }

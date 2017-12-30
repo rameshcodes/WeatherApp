@@ -6,14 +6,13 @@ import android.databinding.ObservableBoolean;
 import android.util.Log;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.model.DayWeatherInfo;
+import android.weather.app.weatherinfo.model.Location;
 import android.weather.app.weatherinfo.networking.RetrofitClient;
 import android.weather.app.weatherinfo.networking.request.WeatherInfoRequest;
 import android.weather.app.weatherinfo.networking.response.WeatherInfoResponse;
-import android.weather.app.weatherinfo.persistance.DatabaseManager;
 import android.weather.app.weatherinfo.utils.Constants;
 import android.weather.app.weatherinfo.utils.Util;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -26,11 +25,13 @@ import io.reactivex.schedulers.Schedulers;
 public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewModel implements ViewModel {
     private static final String TAG = "WeatherInfoActivityView";
     private MutableLiveData<Map<String, DayWeatherInfo>> daysForecastMap;
-    private City city;
+    private final City city;
+    private final boolean isFromFavoriteScreen;
     public final ObservableBoolean showLoading = new ObservableBoolean(false);
 
-    public WeatherInfoActivityViewModel(City city) {
+    public WeatherInfoActivityViewModel(City city, boolean isFromFavoriteScreen) {
         this.city = city;
+        this.isFromFavoriteScreen = isFromFavoriteScreen;
         getWeatherInfoForLocation();
     }
 
@@ -43,8 +44,8 @@ public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewMod
             @Override
             public ObservableSource<Map<String, DayWeatherInfo>> apply(WeatherInfoResponse weatherInfoResponse) throws Exception {
                 Log.i(TAG, "accept: " + weatherInfoResponse);
-                Map<String, DayWeatherInfo> dayWeatherInfoMap = Util.convertToWeatherForecastData(weatherInfoResponse.getData());                DatabaseManager.getInstance().insertWeatherData(city, new ArrayList<DayWeatherInfo>(dayWeatherInfoMap.values()));
-                return Observable.just(dayWeatherInfoMap);
+                Map<Location, Map<String, DayWeatherInfo>> locationWeatherInfoMap = Util.convertToWeatherForecastData(weatherInfoResponse.getData());
+                return Observable.just(locationWeatherInfoMap.get(weatherInfoResponse.getData().getLocationList().get(0)));
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Map<String, DayWeatherInfo>>() {

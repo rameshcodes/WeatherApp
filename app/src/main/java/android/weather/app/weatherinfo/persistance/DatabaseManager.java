@@ -10,15 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Single;
-import io.reactivex.SingleEmitter;
-import io.reactivex.SingleOnSubscribe;
 
 public class DatabaseManager {
     private static DatabaseManager databaseManager;
@@ -59,6 +53,7 @@ public class DatabaseManager {
                 try {
                     List<City> cityList = weatherDatabase.getCityDao().getAllCities();
                     e.onNext(cityList);
+                    e.onComplete();
                 } catch (Throwable t) {
                     e.onError(t);
                 }
@@ -72,5 +67,20 @@ public class DatabaseManager {
             weatherDatabase.getDayWeatherDao().deleteCityWeatherData(city.getCity());
             insertWeatherData(city, new ArrayList<DayWeatherInfo>(locationForecastDataMap.get(location).values()));
         }
+    }
+
+    public Observable<List<DayWeatherInfo>> getWeatherForecastDataForCity(final City city) {
+        return Observable.create(new ObservableOnSubscribe<List<DayWeatherInfo>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<DayWeatherInfo>> e) throws Exception {
+                try {
+                    List<DayWeatherInfo> dayWeatherInfoList = weatherDatabase.getDayWeatherDao().getWeatherForCity(city.getCity());
+                    e.onNext(dayWeatherInfoList);
+                    e.onComplete();
+                } catch (Throwable t) {
+                    e.onError(t);
+                }
+            }
+        });
     }
 }

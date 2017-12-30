@@ -37,7 +37,8 @@ public class WeatherInfoActivity extends MVVMActivity implements DayListHandler 
     @Override
     protected ViewModel getViewModel() {
         City city = getIntent().getParcelableExtra(Constants.EXTRA_CITY);
-        mWeatherInfoActivityViewModel = ViewModelProviders.of(this, new WeatherInfoViewModelFactory(city)).get(WeatherInfoActivityViewModel.class);
+        boolean isFromFavoriteScreen = getIntent().getBooleanExtra(Constants.EXTRA_IS_FROM_FAVORITES_SCREEN,false);
+        mWeatherInfoActivityViewModel = ViewModelProviders.of(this, new WeatherInfoViewModelFactory(city, isFromFavoriteScreen)).get(WeatherInfoActivityViewModel.class);
         return mWeatherInfoActivityViewModel;
     }
 
