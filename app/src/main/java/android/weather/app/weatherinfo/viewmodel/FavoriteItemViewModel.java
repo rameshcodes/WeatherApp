@@ -1,15 +1,15 @@
 package android.weather.app.weatherinfo.viewmodel;
 
 
-import android.weather.app.weatherinfo.handler.FavoriteHandler;
+import android.weather.app.weatherinfo.handler.FavoriteItemHandler;
 import android.weather.app.weatherinfo.model.City;
 
 public class FavoriteItemViewModel implements ViewModel {
     public final City city;
-    public final FavoriteHandler favoriteHandler;
+    public final FavoriteItemHandler favoriteItemHandler;
 
-    public FavoriteItemViewModel(City city, FavoriteHandler favoriteHandler) {
+    public FavoriteItemViewModel(City city, FavoriteItemHandler favoriteItemHandler) {
         this.city = city;
-        this.favoriteHandler = favoriteHandler;
+        this.favoriteItemHandler = favoriteItemHandler;
     }
 }

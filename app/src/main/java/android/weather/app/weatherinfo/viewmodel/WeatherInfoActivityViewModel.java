@@ -43,8 +43,7 @@ public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewMod
             @Override
             public ObservableSource<Map<String, DayWeatherInfo>> apply(WeatherInfoResponse weatherInfoResponse) throws Exception {
                 Log.i(TAG, "accept: " + weatherInfoResponse);
-                Map<String, DayWeatherInfo> dayWeatherInfoMap = Util.convertToWeatherForecastData(weatherInfoResponse.getData());
-                DatabaseManager.getInstance().insertWeatherData(city, new ArrayList<DayWeatherInfo>(dayWeatherInfoMap.values()));
+                Map<String, DayWeatherInfo> dayWeatherInfoMap = Util.convertToWeatherForecastData(weatherInfoResponse.getData());                DatabaseManager.getInstance().insertWeatherData(city, new ArrayList<DayWeatherInfo>(dayWeatherInfoMap.values()));
                 return Observable.just(dayWeatherInfoMap);
             }
         }).subscribeOn(Schedulers.io())

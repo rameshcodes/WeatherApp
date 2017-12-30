@@ -10,28 +10,28 @@ import java.util.List;
 @Root(strict = false)
 public class Data {
 
-    @Element
-    private Location location;
+    @ElementList(entry ="location",inline = true)
+    private List<Location> locationList;
 
     @ElementList(entry = "time-layout", inline = true)
     private List<TimeLayout> timeLayouts;
 
-    @Element
-    private Parameters parameters;
+    @ElementList(entry = "parameters", inline = true)
+    private List<Parameters> parameters;
 
-    public Location getLocation() {
-        return location;
+    public List<Location> getLocationList() {
+        return locationList;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocationList(List<Location> locationList) {
+        this.locationList = locationList;
     }
 
-    public Parameters getParameters() {
+    public List<Parameters> getParameters() {
         return parameters;
     }
 
-    public void setParameters(Parameters parameters) {
+    public void setParameters(List<Parameters> parameters) {
         this.parameters = parameters;
     }
 

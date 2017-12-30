@@ -15,6 +15,9 @@ public interface CityDao {
     @Query("SELECT * FROM city")
     List<City> getAllCities();
 
+    @Query("SELECT * FROM city WHERE latitude=:lat AND longitude=:lon")
+    List<City> getCityForLatLong(final String lat,final String lon);
+
     @Insert
     void insert(City... repos);
 

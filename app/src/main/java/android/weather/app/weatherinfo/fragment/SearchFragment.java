@@ -27,43 +27,22 @@ public class SearchFragment extends MVVMFragment {
     private static final String TAG = "SearchFragment";
     private SearchViewModel mSearchViewModel;
     private SearchAdapter mSearchAdapter;
-    private Context mContext;
+
     private SearchFragmentHandler searchFragmentHandler = new SearchFragmentHandler() {
         @Override
         public void showForecast(City city) {
-            Log.i(TAG, "onItemClicked: " + mContext);
-            Intent intent = new Intent(mContext, WeatherInfoActivity.class);
+            Log.i(TAG, "onItemClicked: " + getContext());
+            Intent intent = new Intent(getContext(), WeatherInfoActivity.class);
             intent.putExtra(Constants.EXTRA_CITY, city);
             startActivity(intent);
         }
     };
-    private SearchItemHandler searchItemHandler = new SearchItemHandler() {
-        @Override
-        public void onItemClicked(City city) {
-            Log.i(TAG, "onItemClicked: " + mContext);
-            Intent intent = new Intent(mContext, WeatherInfoActivity.class);
-            intent.putExtra(Constants.EXTRA_CITY, city);
-            startActivity(intent);
-        }
-
-        @Override
-        public void onFavorite(City city) {
-
-        }
-    };
-
     @NonNull
     @Override
     protected ViewModel getViewModel() {
         mSearchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         mSearchViewModel.setSearchFragmentHandler(searchFragmentHandler);
         return mSearchViewModel;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mContext = context;
     }
 
     @NonNull
@@ -88,12 +67,6 @@ public class SearchFragment extends MVVMFragment {
     public void onDestroyView() {
         mSearchViewModel.setSearchFragmentHandler(null);
         super.onDestroyView();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mContext = null;
     }
 
     private void initViews() {
