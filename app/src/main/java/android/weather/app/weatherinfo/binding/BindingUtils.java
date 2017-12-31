@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.weather.app.weatherinfo.BR;
+import android.weather.app.weatherinfo.R;
 import android.weather.app.weatherinfo.viewmodel.ViewModel;
 import android.widget.ImageView;
 
@@ -55,5 +56,10 @@ public final class BindingUtils {
                         view.setImageBitmap(resource);
                     }
                 });
+    }
+
+    @BindingAdapter({"isFavorite"})
+    public static void setFavorite(final ImageView view, boolean isFavorite) {
+        view.setImageResource(isFavorite ? R.drawable.ic_favorite_selected : R.drawable.ic_favorite_non_selected);
     }
 }

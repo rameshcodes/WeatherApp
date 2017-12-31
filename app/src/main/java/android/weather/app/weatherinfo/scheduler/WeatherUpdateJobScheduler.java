@@ -13,8 +13,8 @@ import com.firebase.jobdispatcher.Trigger;
 
 public class WeatherUpdateJobScheduler {
     private static final String TAG_WEATHER_BG_UPDATE = "android.weather.app.weatherinfo.updateWeather";
-    private static final int INTERVAL_TIME = 60;
-    private static final int WINDOW_TIME = INTERVAL_TIME + 10;
+    private static final int INTERVAL_TIME = 60 * 60;
+    private static final int WINDOW_TIME = INTERVAL_TIME + 10 *60;
 
 
     public static void scheduleJob(Context context) {

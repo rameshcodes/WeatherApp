@@ -5,7 +5,7 @@ import org.simpleframework.xml.Root;
 
 @Root(name = "dwml", strict = false)
 public class ZipCodeLatLongResponse {
-    @Element(name = "latLonList")
+    @Element(name = "latLonList",required = false)
     private String latLongList;
 
     public String getLatLongList() {

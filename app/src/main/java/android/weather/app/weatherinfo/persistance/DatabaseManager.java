@@ -1,10 +1,13 @@
 package android.weather.app.weatherinfo.persistance;
 
 
+import android.database.sqlite.SQLiteConstraintException;
+import android.util.Log;
 import android.weather.app.weatherinfo.WeatherApplication;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.model.DayWeatherInfo;
 import android.weather.app.weatherinfo.model.Location;
+import android.weather.app.weatherinfo.utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +18,9 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 
 public class DatabaseManager {
+    private static final String TAG = "DatabaseManager";
     private static DatabaseManager databaseManager;
+
     private WeatherDatabase weatherDatabase;
 
     public static DatabaseManager getInstance() {
@@ -41,7 +46,25 @@ public class DatabaseManager {
             @Override
             public void run() {
                 super.run();
-                weatherDatabase.getCityDao().insert(city);
+                try {
+                    weatherDatabase.getCityDao().insert(city);
+                } catch (SQLiteConstraintException e) {
+                    Log.e(TAG, "run: " + e.getCause());
+                }
+            }
+        }.start();
+    }
+
+    public void deleteCity(final City city) {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    weatherDatabase.getCityDao().delete(city);
+                } catch (SQLiteConstraintException e) {
+                    Log.e(TAG, "run: " + e.getCause());
+                }
             }
         }.start();
     }
@@ -51,7 +74,8 @@ public class DatabaseManager {
             @Override
             public void subscribe(ObservableEmitter<List<City>> e) throws Exception {
                 try {
-                    List<City> cityList = weatherDatabase.getCityDao().getAllCities();
+                    List<City> cityList = new ArrayList<>();
+                    cityList.addAll(weatherDatabase.getCityDao().getAllCities());
                     e.onNext(cityList);
                     e.onComplete();
                 } catch (Throwable t) {
@@ -69,13 +93,16 @@ public class DatabaseManager {
         }
     }
 
-    public Observable<List<DayWeatherInfo>> getWeatherForecastDataForCity(final City city) {
-        return Observable.create(new ObservableOnSubscribe<List<DayWeatherInfo>>() {
+    public Observable<Map<String, DayWeatherInfo>> getWeatherForecastDataForCity(final City city) {
+        return Observable.create(new ObservableOnSubscribe<Map<String, DayWeatherInfo>>() {
             @Override
-            public void subscribe(ObservableEmitter<List<DayWeatherInfo>> e) throws Exception {
+            public void subscribe(ObservableEmitter<Map<String, DayWeatherInfo>> e) throws Exception {
                 try {
                     List<DayWeatherInfo> dayWeatherInfoList = weatherDatabase.getDayWeatherDao().getWeatherForCity(city.getCity());
-                    e.onNext(dayWeatherInfoList);
+                    if (dayWeatherInfoList == null || dayWeatherInfoList.isEmpty()) {
+                        e.onError(new Throwable("Data Empty"));
+                    }
+                    e.onNext(Util.convertWeatherDataToMap(dayWeatherInfoList));
                     e.onComplete();
                 } catch (Throwable t) {
                     e.onError(t);

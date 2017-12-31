@@ -23,4 +23,5 @@
 
     <!--Favorites-->
     <string name="fav_title">Favorites</string>
+    <string name="no_favorites">No favorites added</string>
 </resources>

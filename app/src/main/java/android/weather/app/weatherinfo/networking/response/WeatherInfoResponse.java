@@ -8,7 +8,7 @@ import org.simpleframework.xml.Root;
 
 @Root(name = "dwml", strict = false)
 public class WeatherInfoResponse {
-    @Element
+    @Element(required = false)
     private Data data;
 
     public Data getData() {

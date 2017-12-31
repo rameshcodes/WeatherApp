@@ -1,5 +1,8 @@
 package android.weather.app.weatherinfo.utils;
 
+import android.content.Context;
+import android.os.IBinder;
+import android.view.inputmethod.InputMethodManager;
 import android.weather.app.weatherinfo.model.Data;
 import android.weather.app.weatherinfo.model.DayWeatherInfo;
 import android.weather.app.weatherinfo.model.HourWeatherInfo;
@@ -12,7 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 
-import java.lang.reflect.Parameter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -36,6 +38,12 @@ public class Util {
         if (element instanceof JsonNull)
             return null;
         return Arrays.asList(new Gson().fromJson(element, clazz));
+    }
+
+    public static boolean hideSoftKeyboard(Context context, IBinder windowToken) {
+        InputMethodManager imm = (InputMethodManager) context
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        return imm.hideSoftInputFromWindow(windowToken, 0);
     }
 
     public static String getTime(String dateTime) {
@@ -81,6 +89,14 @@ public class Util {
             parametersMapMap.put(getLocationForPoint(parameter.getApplicableLocation(), data.getLocationList()), dayWeatherInfoMap);
         }
         return parametersMapMap;
+    }
+
+    public static Map<String, DayWeatherInfo> convertWeatherDataToMap(List<DayWeatherInfo> dayWeatherInfoList) {
+        Map<String, DayWeatherInfo> dayWeatherInfoMap = new TreeMap<>();
+        for (DayWeatherInfo dayWeatherInfo : dayWeatherInfoList) {
+            dayWeatherInfoMap.put(getDate(dayWeatherInfo.getDate()), dayWeatherInfo);
+        }
+        return dayWeatherInfoMap;
     }
 
     private static TimeLayout getTimeLayout(String key, List<TimeLayout> timeLayoutList) {

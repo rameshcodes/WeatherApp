@@ -5,16 +5,37 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="android.weather.app.weatherinfo.viewmodel.FavoriteViewModel" />
 
     </data>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/hourly_temp_recyclerView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/medium_margin"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/hourly_temp_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/medium_margin"
+            android:visibility="@{vm.noResults?View.GONE:View.VISIBLE}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+
+        <TextView
+            android:id="@+id/listViewNoResultsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_layout"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:text="@string/no_favorites"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:visibility="@{vm.noResults?View.VISIBLE:View.GONE}" />
+    </RelativeLayout>
+
 </layout>

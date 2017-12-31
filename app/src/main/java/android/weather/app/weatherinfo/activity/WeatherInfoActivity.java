@@ -1,6 +1,5 @@
 package android.weather.app.weatherinfo.activity;
 
-
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -37,7 +36,7 @@ public class WeatherInfoActivity extends MVVMActivity implements DayListHandler 
     @Override
     protected ViewModel getViewModel() {
         City city = getIntent().getParcelableExtra(Constants.EXTRA_CITY);
-        boolean isFromFavoriteScreen = getIntent().getBooleanExtra(Constants.EXTRA_IS_FROM_FAVORITES_SCREEN,false);
+        boolean isFromFavoriteScreen = getIntent().getBooleanExtra(Constants.EXTRA_IS_FROM_FAVORITES_SCREEN, false);
         mWeatherInfoActivityViewModel = ViewModelProviders.of(this, new WeatherInfoViewModelFactory(city, isFromFavoriteScreen)).get(WeatherInfoActivityViewModel.class);
         return mWeatherInfoActivityViewModel;
     }
@@ -84,7 +83,8 @@ public class WeatherInfoActivity extends MVVMActivity implements DayListHandler 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(SELECTED_DAY, dayForecastViewPager.getCurrentItem());
+        if (dayForecastViewPager != null)
+            outState.putInt(SELECTED_DAY, dayForecastViewPager.getCurrentItem());
     }
 
 

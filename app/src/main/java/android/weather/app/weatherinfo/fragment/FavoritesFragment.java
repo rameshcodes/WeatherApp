@@ -1,6 +1,5 @@
 package android.weather.app.weatherinfo.fragment;
 
-
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
