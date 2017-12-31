@@ -15,6 +15,7 @@ import android.weather.app.weatherinfo.databinding.FragmentSearchBinding;
 import android.weather.app.weatherinfo.handler.SearchFragmentHandler;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.utils.Constants;
+import android.weather.app.weatherinfo.utils.Util;
 import android.weather.app.weatherinfo.viewmodel.SearchItemViewModel;
 import android.weather.app.weatherinfo.viewmodel.SearchViewModel;
 import android.weather.app.weatherinfo.viewmodel.AppViewModel;
@@ -30,6 +31,7 @@ public class SearchFragment extends MVVMFragment {
         @Override
         public void showForecast(City city) {
             Log.i(TAG, "onItemClicked: " + getContext());
+            hideKeyboard();
             Intent intent = new Intent(getContext(), WeatherInfoActivity.class);
             intent.putExtra(Constants.EXTRA_CITY, city);
             startActivity(intent);
@@ -78,8 +80,13 @@ public class SearchFragment extends MVVMFragment {
         mSearchViewModel.getSearchItemViewModelList().observe(this, new Observer<List<SearchItemViewModel>>() {
             @Override
             public void onChanged(@Nullable List<SearchItemViewModel> searchItemViewModels) {
+                hideKeyboard();
                 mSearchAdapter.setSearchItemViewModelList(searchItemViewModels);
             }
         });
+    }
+
+    private void hideKeyboard() {
+        Util.hideSoftKeyboard(getContext(), ((FragmentSearchBinding) mBinding).searchEditText.getWindowToken());
     }
 }

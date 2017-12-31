@@ -11,6 +11,7 @@ import android.view.View;
 import android.weather.app.weatherinfo.BR;
 import android.weather.app.weatherinfo.R;
 import android.weather.app.weatherinfo.viewmodel.AppViewModel;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -59,7 +60,12 @@ public final class BindingUtils {
     }
 
     @BindingAdapter({"isFavorite"})
-    public static void setFavorite(final ImageView view, boolean isFavorite) {
+    public static void setFavorite(final ImageView view, final boolean isFavorite) {
         view.setImageResource(isFavorite ? R.drawable.ic_favorite_selected : R.drawable.ic_favorite_non_selected);
+    }
+
+    @BindingAdapter({"enable"})
+    public static void enableImageButton(final ImageButton imageButton, final boolean isEnabled) {
+        imageButton.setEnabled(isEnabled);
     }
 }

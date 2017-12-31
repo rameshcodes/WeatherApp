@@ -37,14 +37,15 @@
                 android:hint="@string/search_hint"
                 android:maxLines="1"
                 android:padding="@dimen/small_margin">
+
                 <requestFocus />
             </EditText>
 
             <ImageButton
+                enable="@{vm.enableSearchButton}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/search_button_bg_selector"
-                android:clickable="@{vm.enableSearchButton}"
                 android:onClick="@{()->vm.search()}"
                 android:padding="@dimen/medium_margin"
                 android:src="@android:drawable/ic_menu_search" />
