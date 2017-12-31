@@ -25,6 +25,14 @@ public class ForecastFragment extends MVVMFragment {
         return forecastFragment;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        DayWeatherInfo dayWeatherInfo = getArguments().getParcelable(Constants.EXTRA_FORECAST_DATA);
+        hourlyTempAdapter = new HourlyTempAdapter(dayWeatherInfo.getHourWeatherInfoList());
+        ((FragemntDayWeatherInfoBinding) mBinding).hourlyTempRecyclerView.setAdapter(hourlyTempAdapter);
+    }
+
     @NonNull
     @Override
     protected AppViewModel getViewModel() {
@@ -37,11 +45,5 @@ public class ForecastFragment extends MVVMFragment {
         return R.layout.fragemnt_day_weather_info;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        DayWeatherInfo dayWeatherInfo = getArguments().getParcelable(Constants.EXTRA_FORECAST_DATA);
-        hourlyTempAdapter = new HourlyTempAdapter(dayWeatherInfo.getHourWeatherInfoList());
-        ((FragemntDayWeatherInfoBinding) mBinding).hourlyTempRecyclerView.setAdapter(hourlyTempAdapter);
-    }
+
 }

@@ -35,19 +35,6 @@ public class SearchFragment extends MVVMFragment {
             startActivity(intent);
         }
     };
-    @NonNull
-    @Override
-    protected AppViewModel getViewModel() {
-        mSearchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
-        mSearchViewModel.setSearchFragmentHandler(searchFragmentHandler);
-        return mSearchViewModel;
-    }
-
-    @NonNull
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_search;
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -65,6 +52,20 @@ public class SearchFragment extends MVVMFragment {
     public void onDestroyView() {
         mSearchViewModel.setSearchFragmentHandler(null);
         super.onDestroyView();
+    }
+
+    @NonNull
+    @Override
+    protected AppViewModel getViewModel() {
+        mSearchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
+        mSearchViewModel.setSearchFragmentHandler(searchFragmentHandler);
+        return mSearchViewModel;
+    }
+
+    @NonNull
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_search;
     }
 
     private void initViews() {

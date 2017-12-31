@@ -19,8 +19,8 @@ import io.reactivex.functions.Consumer;
 
 public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewModel implements AppViewModel {
     private static final String TAG = "WeatherInfoActivityView";
-    private MutableLiveData<Map<String, DayWeatherInfo>> daysForecastMap;
     public final ObservableBoolean showLoading = new ObservableBoolean(false);
+    private MutableLiveData<Map<String, DayWeatherInfo>> daysForecastMap;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public WeatherInfoActivityViewModel(City city, boolean isFavoriteLocation) {

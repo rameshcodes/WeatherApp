@@ -29,10 +29,23 @@ public class FavoritesFragment extends MVVMFragment {
         public void favoriteClick(City city) {
             Intent intent = new Intent(getContext(), WeatherInfoActivity.class);
             intent.putExtra(Constants.EXTRA_CITY, city);
-            intent.putExtra(Constants.EXTRA_IS_FROM_FAVORITES_SCREEN,true);
+            intent.putExtra(Constants.EXTRA_IS_FROM_FAVORITES_SCREEN, true);
             startActivity(intent);
         }
     };
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getActivity().setTitle(R.string.fav_title);
+        subscribeToData();
+    }
+
+    @Override
+    public void onDestroyView() {
+        favoriteViewModel.setFavoriteHandler(null);
+        super.onDestroyView();
+    }
 
     @NonNull
     @Override
@@ -48,27 +61,15 @@ public class FavoritesFragment extends MVVMFragment {
         return R.layout.fragment_favorites;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle(R.string.fav_title);
-        subscribeToData();
-    }
-
-    @Override
-    public void onDestroyView() {
-        favoriteViewModel.setFavoriteHandler(null);
-        super.onDestroyView();
-    }
-
-    private void subscribeToData(){
+    private void subscribeToData() {
         favoriteViewModel.getListLiveData().observe(this, new Observer<List<FavoriteItemViewModel>>() {
             @Override
             public void onChanged(@Nullable List<FavoriteItemViewModel> favoriteItemViewModels) {
-             setUpList(favoriteItemViewModels);
+                setUpList(favoriteItemViewModels);
             }
         });
     }
+
     private void setUpList(List<FavoriteItemViewModel> favoriteItemViewModelList) {
         favoriteAdapter = new FavoriteAdapter(favoriteItemViewModelList);
         ((FragmentFavoritesBinding) mBinding).hourlyTempRecyclerView.setAdapter(favoriteAdapter);

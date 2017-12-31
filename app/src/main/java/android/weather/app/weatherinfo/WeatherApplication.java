@@ -8,15 +8,15 @@ import android.weather.app.weatherinfo.scheduler.WeatherUpdateJobScheduler;
 public class WeatherApplication extends Application {
     private static Context applicationContext;
 
+    public static Context getContext() {
+        return applicationContext;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         applicationContext = getApplicationContext();
         BindingUtils.setDefaultBinder();
         WeatherUpdateJobScheduler.scheduleJob(getApplicationContext());
-    }
-
-    public static Context getContext() {
-        return applicationContext;
     }
 }

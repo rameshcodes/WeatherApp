@@ -27,12 +27,6 @@ public abstract class MVVMFragment extends Fragment {
         return mRootView;
     }
 
-    @NonNull
-    private ViewModelBinder getDefaultBinder() {
-        ViewModelBinder defaultBinder = BindingUtils.getDefaultBinder();
-        Util.checkNotNull(defaultBinder, "Default Binder");
-        return defaultBinder;
-    }
 
     @NonNull
     protected abstract AppViewModel getViewModel();
@@ -40,4 +34,10 @@ public abstract class MVVMFragment extends Fragment {
     @NonNull
     protected abstract int getLayoutId();
 
+    @NonNull
+    private ViewModelBinder getDefaultBinder() {
+        ViewModelBinder defaultBinder = BindingUtils.getDefaultBinder();
+        Util.checkNotNull(defaultBinder, "Default Binder");
+        return defaultBinder;
+    }
 }

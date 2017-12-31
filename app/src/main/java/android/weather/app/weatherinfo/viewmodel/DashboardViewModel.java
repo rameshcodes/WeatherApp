@@ -4,7 +4,7 @@ import android.weather.app.weatherinfo.handler.DashboardHandler;
 
 public class DashboardViewModel implements AppViewModel {
     private static final String TAG = "DashboardViewModel";
-    private DashboardHandler mDashboardHandler;
+    private final DashboardHandler mDashboardHandler;
 
     public DashboardViewModel(DashboardHandler dashboardHandler) {
         mDashboardHandler = dashboardHandler;

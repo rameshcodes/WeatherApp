@@ -11,6 +11,7 @@ import android.weather.app.weatherinfo.model.City;
 
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 public class FavoriteViewModel extends android.arch.lifecycle.ViewModel implements AppViewModel, FavoriteItemHandler {
@@ -19,6 +20,7 @@ public class FavoriteViewModel extends android.arch.lifecycle.ViewModel implemen
     public final ObservableBoolean noResults = new ObservableBoolean(false);
     private MutableLiveData<List<FavoriteItemViewModel>> listLiveData;
     private FavoriteHandler favoriteHandler;
+    private Disposable d;
 
     public FavoriteViewModel() {
         loadFavoriteCities();
@@ -35,8 +37,23 @@ public class FavoriteViewModel extends android.arch.lifecycle.ViewModel implemen
         this.favoriteHandler = favoriteHandler;
     }
 
+    @Override
+    public void onFavoriteSelected(City city) {
+        if (favoriteHandler != null) {
+            favoriteHandler.favoriteClick(city);
+        }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        if (d != null && !d.isDisposed()) {
+            d.dispose();
+        }
+    }
+
     private void loadFavoriteCities() {
-        DataSource.loadFavoritesDataObservable(this).subscribe(new Consumer<List<FavoriteItemViewModel>>() {
+        d = DataSource.loadFavoritesDataObservable(this).subscribe(new Consumer<List<FavoriteItemViewModel>>() {
             @Override
             public void accept(List<FavoriteItemViewModel> favoriteItemViewModels) throws Exception {
                 Log.i(TAG, "accept: " + favoriteItemViewModels);
@@ -50,12 +67,5 @@ public class FavoriteViewModel extends android.arch.lifecycle.ViewModel implemen
                 Log.i(TAG, "accept: " + throwable.getMessage());
             }
         });
-    }
-
-    @Override
-    public void onFavoriteSelected(City city) {
-        if (favoriteHandler != null) {
-            favoriteHandler.favoriteClick(city);
-        }
     }
 }
