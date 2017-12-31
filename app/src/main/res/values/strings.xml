@@ -24,4 +24,8 @@
     <!--Favorites-->
     <string name="fav_title">Favorites</string>
     <string name="no_favorites">No favorites added</string>
+
+    <!-- Errors -->
+    <string name="timeout_exception">Request timed out</string>
+    <string name="no_internet_connection">No internet connection</string>
 </resources>

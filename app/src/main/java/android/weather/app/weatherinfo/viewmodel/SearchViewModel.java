@@ -10,6 +10,7 @@ import android.weather.app.weatherinfo.handler.SearchItemHandler;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.networking.response.ZipCodeLatLongResponse;
 import android.weather.app.weatherinfo.persistance.DatabaseManager;
+import android.weather.app.weatherinfo.utils.ActivityUtils;
 
 import java.util.List;
 
@@ -100,6 +101,7 @@ public class SearchViewModel extends android.arch.lifecycle.ViewModel implements
             @Override
             public void accept(Throwable throwable) throws Exception {
                 showLoading.set(false);
+                ActivityUtils.handleError(throwable);
                 Log.i(TAG, "error: " + throwable.getMessage());
             }
         });
@@ -121,6 +123,7 @@ public class SearchViewModel extends android.arch.lifecycle.ViewModel implements
             @Override
             public void accept(Throwable throwable) throws Exception {
                 showLoading.set(false);
+                ActivityUtils.handleError(throwable);
                 Log.i(TAG, "error: " + throwable.getMessage());
             }
         });

@@ -8,6 +8,7 @@ import android.weather.app.weatherinfo.DataSource;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.model.DayWeatherInfo;
 import android.weather.app.weatherinfo.persistance.DatabaseManager;
+import android.weather.app.weatherinfo.utils.ActivityUtils;
 import android.weather.app.weatherinfo.utils.RxUtil;
 
 import java.util.Map;
@@ -70,6 +71,8 @@ public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewMod
                 Log.i(TAG, "accept: " + dayWeatherInfoMap);
                 if (!dayWeatherInfoMap.isEmpty()) {
                     daysForecastMap.postValue(dayWeatherInfoMap);
+                } else {
+                    ActivityUtils.handleError(new Throwable("No data found"));
                 }
                 showLoading.set(false);
             }
@@ -77,6 +80,7 @@ public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewMod
             @Override
             public void accept(Throwable throwable) throws Exception {
                 Log.e(TAG, "Error: " + throwable.getMessage());
+                ActivityUtils.handleError(throwable);
                 showLoading.set(false);
             }
         });
