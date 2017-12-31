@@ -2,7 +2,6 @@ package android.weather.app.weatherinfo.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,12 +13,11 @@ import android.weather.app.weatherinfo.activity.WeatherInfoActivity;
 import android.weather.app.weatherinfo.adapter.SearchAdapter;
 import android.weather.app.weatherinfo.databinding.FragmentSearchBinding;
 import android.weather.app.weatherinfo.handler.SearchFragmentHandler;
-import android.weather.app.weatherinfo.handler.SearchItemHandler;
 import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.utils.Constants;
 import android.weather.app.weatherinfo.viewmodel.SearchItemViewModel;
 import android.weather.app.weatherinfo.viewmodel.SearchViewModel;
-import android.weather.app.weatherinfo.viewmodel.ViewModel;
+import android.weather.app.weatherinfo.viewmodel.AppViewModel;
 
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class SearchFragment extends MVVMFragment {
     };
     @NonNull
     @Override
-    protected ViewModel getViewModel() {
+    protected AppViewModel getViewModel() {
         mSearchViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         mSearchViewModel.setSearchFragmentHandler(searchFragmentHandler);
         return mSearchViewModel;

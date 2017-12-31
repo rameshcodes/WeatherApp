@@ -17,7 +17,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-public class SearchViewModel extends android.arch.lifecycle.ViewModel implements ViewModel, SearchItemHandler {
+public class SearchViewModel extends android.arch.lifecycle.ViewModel implements AppViewModel, SearchItemHandler {
     private static final String TAG = "SearchViewModel";
     public final ObservableBoolean enableSearchButton = new ObservableBoolean(false);
     public final ObservableBoolean noResults = new ObservableBoolean(false);

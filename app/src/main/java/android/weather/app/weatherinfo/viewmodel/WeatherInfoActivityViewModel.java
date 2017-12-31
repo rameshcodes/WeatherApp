@@ -10,14 +10,13 @@ import android.weather.app.weatherinfo.model.DayWeatherInfo;
 import android.weather.app.weatherinfo.persistance.DatabaseManager;
 import android.weather.app.weatherinfo.utils.RxUtil;
 
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
-public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewModel implements ViewModel {
+public class WeatherInfoActivityViewModel extends android.arch.lifecycle.ViewModel implements AppViewModel {
     private static final String TAG = "WeatherInfoActivityView";
     private MutableLiveData<Map<String, DayWeatherInfo>> daysForecastMap;
     public final ObservableBoolean showLoading = new ObservableBoolean(false);

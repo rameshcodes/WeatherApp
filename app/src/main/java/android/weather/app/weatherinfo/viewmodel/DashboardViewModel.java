@@ -2,7 +2,7 @@ package android.weather.app.weatherinfo.viewmodel;
 
 import android.weather.app.weatherinfo.handler.DashboardHandler;
 
-public class DashboardViewModel implements ViewModel {
+public class DashboardViewModel implements AppViewModel {
     private static final String TAG = "DashboardViewModel";
     private DashboardHandler mDashboardHandler;
 

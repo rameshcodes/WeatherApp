@@ -5,7 +5,7 @@ import android.databinding.ObservableBoolean;
 import android.weather.app.weatherinfo.handler.SearchItemHandler;
 import android.weather.app.weatherinfo.model.City;
 
-public class SearchItemViewModel implements ViewModel {
+public class SearchItemViewModel implements AppViewModel {
     public final City city;
     public final SearchItemHandler mSearchItemHandler;
     public final ObservableBoolean isFavorite;

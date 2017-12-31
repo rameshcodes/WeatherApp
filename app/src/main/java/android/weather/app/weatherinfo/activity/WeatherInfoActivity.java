@@ -16,7 +16,7 @@ import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.model.DayWeatherInfo;
 import android.weather.app.weatherinfo.utils.Constants;
 import android.weather.app.weatherinfo.view.DayRecyclerView;
-import android.weather.app.weatherinfo.viewmodel.ViewModel;
+import android.weather.app.weatherinfo.viewmodel.AppViewModel;
 import android.weather.app.weatherinfo.viewmodel.WeatherInfoActivityViewModel;
 import android.weather.app.weatherinfo.viewmodel.factory.WeatherInfoViewModelFactory;
 
@@ -34,7 +34,7 @@ public class WeatherInfoActivity extends MVVMActivity implements DayListHandler 
 
     @NonNull
     @Override
-    protected ViewModel getViewModel() {
+    protected AppViewModel getViewModel() {
         City city = getIntent().getParcelableExtra(Constants.EXTRA_CITY);
         boolean isFromFavoriteScreen = getIntent().getBooleanExtra(Constants.EXTRA_IS_FROM_FAVORITES_SCREEN, false);
         mWeatherInfoActivityViewModel = ViewModelProviders.of(this, new WeatherInfoViewModelFactory(city, isFromFavoriteScreen)).get(WeatherInfoActivityViewModel.class);

@@ -11,7 +11,7 @@ import android.weather.app.weatherinfo.databinding.FragemntDayWeatherInfoBinding
 import android.weather.app.weatherinfo.model.DayWeatherInfo;
 import android.weather.app.weatherinfo.utils.Constants;
 import android.weather.app.weatherinfo.viewmodel.ForecastViewModel;
-import android.weather.app.weatherinfo.viewmodel.ViewModel;
+import android.weather.app.weatherinfo.viewmodel.AppViewModel;
 
 public class ForecastFragment extends MVVMFragment {
     private HourlyTempAdapter hourlyTempAdapter;
@@ -27,7 +27,7 @@ public class ForecastFragment extends MVVMFragment {
 
     @NonNull
     @Override
-    protected ViewModel getViewModel() {
+    protected AppViewModel getViewModel() {
         return new ForecastViewModel((DayWeatherInfo) getArguments().getParcelable(Constants.EXTRA_FORECAST_DATA));
     }
 

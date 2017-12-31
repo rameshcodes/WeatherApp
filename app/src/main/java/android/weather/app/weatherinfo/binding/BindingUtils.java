@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.weather.app.weatherinfo.BR;
 import android.weather.app.weatherinfo.R;
-import android.weather.app.weatherinfo.viewmodel.ViewModel;
+import android.weather.app.weatherinfo.viewmodel.AppViewModel;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -29,7 +29,7 @@ public final class BindingUtils {
     public static void setDefaultBinder() {
         defaultBinder = new ViewModelBinder() {
             @Override
-            public void bind(ViewDataBinding viewDataBinding, ViewModel viewModel) {
+            public void bind(ViewDataBinding viewDataBinding, AppViewModel viewModel) {
                 viewDataBinding.setVariable(BR.vm, viewModel);
             }
         };

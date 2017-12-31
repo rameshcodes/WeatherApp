@@ -16,7 +16,7 @@ import android.weather.app.weatherinfo.model.City;
 import android.weather.app.weatherinfo.utils.Constants;
 import android.weather.app.weatherinfo.viewmodel.FavoriteItemViewModel;
 import android.weather.app.weatherinfo.viewmodel.FavoriteViewModel;
-import android.weather.app.weatherinfo.viewmodel.ViewModel;
+import android.weather.app.weatherinfo.viewmodel.AppViewModel;
 
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class FavoritesFragment extends MVVMFragment {
 
     @NonNull
     @Override
-    protected ViewModel getViewModel() {
+    protected AppViewModel getViewModel() {
         favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel.class);
         favoriteViewModel.setFavoriteHandler(favoriteItemHandler);
         return favoriteViewModel;

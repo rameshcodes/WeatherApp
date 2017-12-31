@@ -10,7 +10,7 @@ import android.weather.app.weatherinfo.handler.DashboardHandler;
 import android.weather.app.weatherinfo.utils.ActivityUtils;
 import android.weather.app.weatherinfo.utils.SearchTransition;
 import android.weather.app.weatherinfo.viewmodel.DashboardViewModel;
-import android.weather.app.weatherinfo.viewmodel.ViewModel;
+import android.weather.app.weatherinfo.viewmodel.AppViewModel;
 
 public class DashboardFragment extends MVVMFragment {
 
@@ -37,7 +37,7 @@ public class DashboardFragment extends MVVMFragment {
 
     @NonNull
     @Override
-    protected ViewModel getViewModel() {
+    protected AppViewModel getViewModel() {
         return new DashboardViewModel(dashboardHandler);
     }
 

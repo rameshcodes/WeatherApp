@@ -4,7 +4,7 @@ package android.weather.app.weatherinfo.viewmodel;
 import android.databinding.ObservableBoolean;
 import android.weather.app.weatherinfo.handler.DayListHandler;
 
-public class DayTabViewModel implements ViewModel {
+public class DayTabViewModel implements AppViewModel {
     public final ObservableBoolean isSelected = new ObservableBoolean(false);
     public final String day;
     public final DayListHandler dayListHandler;

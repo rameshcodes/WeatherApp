@@ -8,19 +8,12 @@ import android.weather.app.weatherinfo.DataSource;
 import android.weather.app.weatherinfo.handler.FavoriteHandler;
 import android.weather.app.weatherinfo.handler.FavoriteItemHandler;
 import android.weather.app.weatherinfo.model.City;
-import android.weather.app.weatherinfo.model.Data;
-import android.weather.app.weatherinfo.persistance.DatabaseManager;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 
-public class FavoriteViewModel extends android.arch.lifecycle.ViewModel implements ViewModel, FavoriteItemHandler {
+public class FavoriteViewModel extends android.arch.lifecycle.ViewModel implements AppViewModel, FavoriteItemHandler {
     private static final String TAG = "FavoriteViewModel";
 
     public final ObservableBoolean noResults = new ObservableBoolean(false);

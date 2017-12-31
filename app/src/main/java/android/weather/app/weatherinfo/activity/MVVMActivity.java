@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.weather.app.weatherinfo.binding.BindingUtils;
 import android.weather.app.weatherinfo.binding.ViewModelBinder;
 import android.weather.app.weatherinfo.utils.Util;
-import android.weather.app.weatherinfo.viewmodel.ViewModel;
+import android.weather.app.weatherinfo.viewmodel.AppViewModel;
 
 public abstract class MVVMActivity extends BaseActivity {
     protected ViewDataBinding mBinding;
@@ -35,7 +35,7 @@ public abstract class MVVMActivity extends BaseActivity {
     }
 
     @NonNull
-    protected abstract ViewModel getViewModel();
+    protected abstract AppViewModel getViewModel();
 
     @NonNull
     protected abstract int getLayoutId();
