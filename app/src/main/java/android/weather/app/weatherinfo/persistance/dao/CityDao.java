@@ -15,11 +15,18 @@ public interface CityDao {
     List<City> getAllCities();
 
     @Query("SELECT * FROM city WHERE latitude=:lat AND longitude=:lon")
-    List<City> getCityForLatLong(final String lat,final String lon);
+    List<City> getCityForLatLong(final String lat, final String lon);
+
+
+    @Query("SELECT * FROM city WHERE city=:cityName")
+    List<City> getCityByName(final String cityName);
 
     @Insert
     void insert(City... repos);
 
     @Delete
     void delete(City... repos);
+
+    @Query("DELETE FROM city")
+    void delete();
 }

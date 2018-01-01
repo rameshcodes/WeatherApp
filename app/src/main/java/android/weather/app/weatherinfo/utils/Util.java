@@ -106,7 +106,7 @@ public class Util {
         return null;
     }
 
-    private static String getDate(String dateTime) {
+    public static String getDate(String dateTime) {
         Date date = null;
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
