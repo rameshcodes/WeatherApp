@@ -4,10 +4,10 @@ package android.weather.app.weatherinfo.model;
 import org.simpleframework.xml.Attribute;
 
 public class Point {
-    @Attribute(name = "latitude")
+    @Attribute(name = "longitude")
     private String longitude;
 
-    @Attribute(name = "longitude")
+    @Attribute(name = "latitude")
     private String latitude;
 
     public String getLongitude() {

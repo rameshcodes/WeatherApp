@@ -6,8 +6,6 @@ import android.weather.app.weatherinfo.model.HourWeatherInfo;
 import android.weather.app.weatherinfo.utils.Util;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
 
 import java.util.List;
 
@@ -27,8 +25,7 @@ public class HoursWeatherConverter {
         if (data == null) {
             return (null);
         }
-        JsonElement element = new JsonPrimitive(data);
-        return Util.jsonElementToList(element.getAsJsonObject(), HourWeatherInfo[].class);
+        return Util.jsonElementToList(data, HourWeatherInfo[].class);
     }
 
 }

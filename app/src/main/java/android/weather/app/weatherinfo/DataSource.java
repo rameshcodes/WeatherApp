@@ -129,7 +129,7 @@ public class DataSource {
                 StringBuilder latLongBuilder = new StringBuilder();
                 for (int i = 0; i < cityList.size(); i++) {
                     City city = cityList.get(i);
-                    latLongBuilder.append(city.getLatitude()).append(",").append(city.getLatitude());
+                    latLongBuilder.append(city.getLatitude()).append(",").append(city.getLongitude());
                     if (i != cityList.size() - 1) {
                         latLongBuilder.append(" ");
                     }

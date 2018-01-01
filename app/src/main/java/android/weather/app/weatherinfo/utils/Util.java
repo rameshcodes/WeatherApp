@@ -12,8 +12,6 @@ import android.weather.app.weatherinfo.model.Temperature;
 import android.weather.app.weatherinfo.model.TimeLayout;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonNull;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,10 +32,10 @@ public class Util {
         }
     }
 
-    public static <T> List<T> jsonElementToList(JsonElement element, Class<T[]> clazz) {
-        if (element instanceof JsonNull)
+    public static <T> List<T> jsonElementToList(String data, Class<T[]> clazz) {
+        if (data == null)
             return null;
-        return Arrays.asList(new Gson().fromJson(element, clazz));
+        return Arrays.asList(new Gson().fromJson(data, clazz));
     }
 
     public static boolean hideSoftKeyboard(Context context, IBinder windowToken) {
@@ -94,7 +92,7 @@ public class Util {
     public static Map<String, DayWeatherInfo> convertWeatherDataToMap(List<DayWeatherInfo> dayWeatherInfoList) {
         Map<String, DayWeatherInfo> dayWeatherInfoMap = new TreeMap<>();
         for (DayWeatherInfo dayWeatherInfo : dayWeatherInfoList) {
-            dayWeatherInfoMap.put(getDate(dayWeatherInfo.getDate()), dayWeatherInfo);
+            dayWeatherInfoMap.put(dayWeatherInfo.getDate(), dayWeatherInfo);
         }
         return dayWeatherInfoMap;
     }
@@ -118,7 +116,7 @@ public class Util {
             e.printStackTrace();
         }
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM dd", Locale.US);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd", Locale.US);
         return simpleDateFormat.format(date);
     }
 

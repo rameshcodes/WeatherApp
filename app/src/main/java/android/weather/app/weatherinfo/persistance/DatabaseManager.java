@@ -87,9 +87,12 @@ public class DatabaseManager {
 
     public void updateWeatherForecastInfo(Map<Location, Map<String, DayWeatherInfo>> locationForecastDataMap) {
         for (Location location : locationForecastDataMap.keySet()) {
-            City city = weatherDatabase.getCityDao().getCityForLatLong(location.getPoint().getLatitude(), location.getPoint().getLongitude()).get(0);
-            weatherDatabase.getDayWeatherDao().deleteCityWeatherData(city.getCity());
-            insertWeatherData(city, new ArrayList<DayWeatherInfo>(locationForecastDataMap.get(location).values()));
+            List<City> cities = weatherDatabase.getCityDao().getCityForLatLong(location.getPoint().getLatitude(), location.getPoint().getLongitude());
+            if (cities != null && !cities.isEmpty()) {
+                City city = cities.get(0);
+                weatherDatabase.getDayWeatherDao().deleteCityWeatherData(city.getCity());
+                insertWeatherData(city, new ArrayList<DayWeatherInfo>(locationForecastDataMap.get(location).values()));
+            }
         }
     }
 

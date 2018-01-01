@@ -5,13 +5,25 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class HourWeatherInfo implements Parcelable {
-    private final String imageUrl;
-    private final String time;
-    private final String temp;
+    private String imageUrl;
+    private String time;
+    private String temp;
 
     public HourWeatherInfo(String imageUrl, String time, String temp) {
         this.imageUrl = imageUrl;
         this.time = time;
+        this.temp = temp;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setTemp(String temp) {
         this.temp = temp;
     }
 
